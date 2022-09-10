@@ -1,13 +1,18 @@
 # save_augmentation_image_by_folder
 This is the code for svae the Image generate by the ImageDataGenerator, the file will save follow by your origin file tree.
 
-Before using please install the following package:
-scipy
-tensorflow
-keras
-numpy
-scipy
-Pillow
+Why for doing this? 
+
+It is so slow when using ImageDataGenerator: 3 second for a epochs > 60 second for a epochs...  <br />
+Also some image after augmentation it is being a no use data, so saving the image can let me traning faster and the quality of image will be better after human filtering.
+
+Before using please install the following package:<br />
+scipy<br />
+tensorflow<br />
+keras<br />
+numpy<br />
+scipy<br />
+Pillow<br />
 
 Using the test_set for example:
 
