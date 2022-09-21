@@ -14,8 +14,7 @@ def train_data(file_Dir, target_dir, rate=0.5, batchsize=1):
         width_shift_range=.15,
         height_shift_range=.15,
         horizontal_flip=True,
-        zoom_range=0.5,
-        batch_size=batchsize
+        zoom_range=0.5
     )
 
     for i in range(len(path_dir)):
@@ -38,7 +37,8 @@ def train_data(file_Dir, target_dir, rate=0.5, batchsize=1):
             image_gen_train.fit(image)
             for x, val in zip(image_gen_train.flow(image,  # image we chose
                                                    save_to_dir=targetdir,  # this is where we figure out where to save
-                                                   save_format='png'), range(
+                                                   save_format='png',
+                                                   batch_size=batchsize), range(
                 1)):  # here we define a range because we want 10 augmented images otherwise it will keep looping forever
                 # I think
                 continue
@@ -63,7 +63,7 @@ def val_data(val_dir, target_size1, target_size2):
 
 
 if __name__ == '__main__':
-    fileDir = "./train/"  # source data path
-    save_dir = "./train/"
+    fileDir = "./train_flower/"  # source data path
+    save_dir = "./train_flower_1/"
     train_data(fileDir, save_dir)
     quit()
