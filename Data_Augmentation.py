@@ -1,4 +1,5 @@
 import PIL
+import contextlib
 from keras.preprocessing.image import ImageDataGenerator
 import os, random
 import numpy as np
@@ -9,12 +10,12 @@ def train_data(file_Dir, target_dir, rate=0.5, batchsize=1):
 
     # More information for ImageDataGenerator can see in here https: // www.tensorflow.org / api_docs / python / tf / keras / preprocessing / image / ImageDataGenerator
     image_gen_train = ImageDataGenerator(
-        rescale=1. / 255,
-        rotation_range=45,
-        width_shift_range=.15,
-        height_shift_range=.15,
+        # rescale=1. / 255,
+        # rotation_range=45,
+        # width_shift_range=.15,
+        # height_shift_range=.15,
         horizontal_flip=True,
-        zoom_range=0.5
+        # zoom_range=0.5
     )
 
     for i in range(len(path_dir)):
@@ -32,19 +33,16 @@ def train_data(file_Dir, target_dir, rate=0.5, batchsize=1):
             filenumber * rate)  # Process ratio, it mena how many % of image in the file you want to process
         sample = random.sample(newpath_dir, picknumber)  # random select image
         for name in sample:
-            image = np.expand_dims(PIL.Image.open(f'{newdir}/{name}'), 0)
+            with contextlib.suppress(Exception):
+                print(name)
+                image = np.expand_dims(PIL.Image.open(f'{newdir}/{name}'), 0)
 
-            image_gen_train.fit(image)
-            for x, val in zip(image_gen_train.flow(image,  # image we chose
-                                                   save_to_dir=targetdir,  # this is where we figure out where to save
-                                                   save_format='png',
-                                                   batch_size=batchsize), range(
-                1)):  # here we define a range because we want 10 augmented images otherwise it will keep looping forever
-                # I think
-                continue
-
-            # for i in range(2):
-            #     train_data_gen.next()
+                fit_image = image_gen_train.flow(image,  # image we chose
+                                                 save_to_dir=targetdir,  # this is where we figure out where to save
+                                                 save_format='png',
+                                                 batch_size=batchsize)
+                fit_image.next()
+                # print("x")
     print('\n')
     print('Train data augmentation complete')
 
