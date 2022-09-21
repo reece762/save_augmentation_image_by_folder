@@ -4,8 +4,8 @@ import os, random
 import numpy as np
 
 
-def train_data(fileDir, target_dir, rate=0.5, batchsize=1):
-    pathDir = os.listdir(fileDir)  # read data path
+def train_data(file_Dir, target_dir, rate=0.5, batchsize=1):
+    path_dir = os.listdir(file_Dir)  # read data path
 
     # More information for ImageDataGenerator can see in here https: // www.tensorflow.org / api_docs / python / tf / keras / preprocessing / image / ImageDataGenerator
     image_gen_train = ImageDataGenerator(
@@ -18,11 +18,11 @@ def train_data(fileDir, target_dir, rate=0.5, batchsize=1):
         batch_size=batchsize
     )
 
-    for i in range(len(pathDir)):
-        newdir = os.path.join(fileDir, pathDir[i])
-        newpathDir = os.listdir(newdir)
-        targetdir = os.path.join(target_dir, pathDir[i])
-        filenumber = len(newpathDir)
+    for i in range(len(path_dir)):
+        newdir = os.path.join(file_Dir, path_dir[i])
+        newpath_dir = os.listdir(newdir)
+        targetdir = os.path.join(target_dir, path_dir[i])
+        filenumber = len(newpath_dir)
         print("newdir:", newdir)
         print("targetdir:", targetdir)
         print("filenumber:", filenumber)
@@ -31,7 +31,7 @@ def train_data(fileDir, target_dir, rate=0.5, batchsize=1):
 
         picknumber = int(
             filenumber * rate)  # Process ratio, it mena how many % of image in the file you want to process
-        sample = random.sample(newpathDir, picknumber)  # random select image
+        sample = random.sample(newpath_dir, picknumber)  # random select image
         for name in sample:
             image = np.expand_dims(PIL.Image.open(f'{newdir}/{name}'), 0)
 
